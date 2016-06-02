@@ -1,0 +1,40 @@
+{% extends 'Core/layout.html.twig' %}
+{% set active = 'gerenciarUsuarios' %}
+
+{% block content %}
+
+
+<div class="row-fluid">
+  <div class="span12">
+    <h3 class="titulo"><span class="batch primary"></span>&nbsp;Cadastro de Departamentos</h3>
+    <div class="row-fluid">
+      <div class="alert alert-success" id="div_alert" style="display:none;"></div>
+    </div>
+
+    <form role="form"  name="frm_cadastro" id="frm_cadastro">
+      <input type="hidden" name="idRegistro" id="idRegistro" value="">
+      <input type="hidden" name="module" id="module" value="{{module}}">
+      <div class="alinha">
+        <label>Digite o nome:</label>
+        <input class="form-control" type="text" name="departamento" id="departamento" value="" size="30" style="width:180px;">
+      </div> 
+      <div class='clearfix'></div>
+      
+      <div class="buttons">
+        <button type="button" class="btn btn-default" onclick="$(this).button('loading');window.history.go(-1)" data-loading-text="Aguarde...&nbsp;<i class='fa fa-spinner fa-spin'></i>" >
+          <span class="glyphicon glyphicon-remove"></span>
+          Cancelar
+        </button>
+        <button type="submit" class="btn btn-primary" data-loading-text="Aguarde...&nbsp;<i class='fa fa-spinner fa-spin'></i>"  id="btn_cadastro">
+          <span class="glyphicon glyphicon-ok"></span>
+          Salvar
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>  
+
+<div id="list_container"></div>
+
+{% endblock %}

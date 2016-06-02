@@ -1,0 +1,35 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+    <title>Bem vindo ao Lótus</title>
+        <link href="{{ app.request.basepath }}/css/bootstrap.css" rel="stylesheet" type="text/css" />
+        <link href="{{ app.request.basepath }}/css/login.css" rel="stylesheet" type="text/css" />
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <form class="form-signin" role="form" action="{{ path('login_check') }}" method="post"> 
+                <h2 class="form-signin-heading">Entre com seu usuário</h2>
+        {% if error == 'Bad credentials' %}
+          <div class="alert alert-danger">Usuário ou Senha inválidos</div>
+        {% endif %}
+
+       <input type="text" name="_username" value="{{ last_username }}" class="form-control" placeholder="Nome de Usuário" required=""/>
+       <input type="password" name="_password" value="" class="form-control" placeholder="Senha" required=""/>
+        <label class="checkbox">
+          <input type="checkbox" value="remember-me">Lembrar
+        </label>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+      </form>
+
+    </div> <!-- /container -->
+
+
+</body></html>

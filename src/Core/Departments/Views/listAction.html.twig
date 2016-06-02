@@ -1,0 +1,49 @@
+<div class="tab-content">
+  <div class="tab-pane active" id="todas">
+    <table class="table table-striped">
+      <thead>
+        <tr class="filter">
+          <th align="left" width="14%">Nome departamento</th>
+          <th align="left" width="14%"><b></b>Código departamento</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for DepartmentEntity in departamentos %}
+          <tr>
+          <td class="left">{{ DepartmentEntity.nomeDepartamento }}</td>
+          <td class="left">{{ DepartmentEntity.idDepartamento }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div style="text-align: center;">
+      <div class="breadcrumb" >
+        <p class="pull-left pagination-leg">Registros encontrados: {{ pagination.totalRegs }} (exibindo de {{ pagination.de }} a {{pagination.ate}})</p>
+        <ul class="pull-right pagination pagination-sm">
+        {% if pagination.first == 'enabled'%}
+          <li><a href="javascript:;" onclick="loadPage('1');"> << </a></li>
+          <li><a href="javascript:;" onclick="loadPageBefore();"> < </a></li>
+        {% endif %}
+        {% for item in pagination.itens %}
+          {% if item.active  %}
+
+          <li class="active"><a href="javascript:;">{{ item.num }}</a></li>
+          {% else %}
+            {% if item.disabled == '0' %}
+              <li><a href="javascript:;" onclick="loadPage('{{ item.num }}');">{{ item.num }}</a></li>
+            {% endif %}
+
+          {% endif %}
+          
+        {% endfor %}
+          {% if pagination.last == 'enabled'%}
+          <li><a href="javascript:;" onclick="loadPageNext();"> > </a></li>
+          <li><a href="javascript:;" onclick="loadPage('{{ pagination.lastpag }}');"> >> </a></li>
+          {% endif %}
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,10 @@
+{% extends 'Core/layout.html.twig' %}
+{% set active = 'index' %}
+
+{% block content %}
+
+    <h1>Hello</h1>
+    
+        Hello "{{ app.security.token.user.nomeUsuario }}".<br />      
+   
+{% endblock %}

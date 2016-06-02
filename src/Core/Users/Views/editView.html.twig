@@ -1,0 +1,211 @@
+{% extends 'Core/layout.html.twig' %}
+{% set active = 'gerenciarUsuarios' %}
+
+{% block content %}
+
+{% set div_alert_display = 'none' %}
+{% set div_alert_class = '' %}
+{% set div_alert_text = '' %}
+
+{% if idRegistro != '' %}
+  {% set div_alert_display = 'block' %}
+  {% if registroEntity.idUsuario != idRegistro %}
+    {% set div_alert_class = 'alert-danger' %}
+    {% set div_alert_text =  'Falha ao encontrar o registro!' %}
+  {% endif %}
+{% endif %}
+
+
+<div class="span12">
+
+	<ol class="breadcrumb">
+	  <li><a href="#">Início</a></li>
+	  <li>Usuários</li>
+	  <li class="active">Cadastro</li>
+	</ol>
+
+    <h3 class="titulo"><i class="glyphicon glyphicon-user"></i> Cadastro de Usuários</h3>
+     <div class="alert {{ div_alert_class }}" id="div_alert" style="display:{{ div_alert_display }}">
+      {{ div_alert_text }}
+    </div>
+    <form name="frm_cadastro" id="frm_cadastro" role="form">
+      <input type="hidden" name="idRegistro" id="idRegistro" value="{{ idRegistro }}">
+      <input type="hidden" name="module" id="module" value="{{ module }}">
+
+      <h4>Dados Pessoais</h4>
+      <div class="alinha">
+        <label for="nomeUsuario">Nome: *</label>
+        <input type="text" name="nomeUsuario" id="nomeUsuario" value="{{ registroEntity.nomeUsuario }}" size="45" maxlength="100" class="form-control" required>
+      </div>
+      <div class="alinha">
+        <label for="email">E-mail:</label>
+        <input type="text" name="email" id="email" value="{{ registroEntity.email }}" size="45" maxlength="70" class="form-control" required>
+      </div>
+      <div class="clearfix"></div>
+      <div class="alinha">
+        <label for="dtNascimento">Nascimento:</label>
+        <input type="text" name="dtNascimento" id="dtNascimento" value="{{ registroEntity.dtNascimento is empty ? "" :registroEntity.dtNascimento|date("d/m/Y") }}" size="12" class="form-control mask-date">
+      </div>
+      <div class="alinha">
+        <label for="cpf">CPF:</label>
+        <input type="text" name="cpf" id="cpf" value="{{ registroEntity.cpf }}" size="20" maxlength="14" class="form-control mask-cpf">
+      </div>
+      <div class="alinha">
+        <label for="rg">RG:</label>
+        <input type="text" name="rg" id="rg" value="{{ registroEntity.rg }}" size="20" maxlength="15" class="form-control">
+      </div>
+      <div class="clearfix"></div><br>
+      <h4>Endereço</h4>
+      <div class="alinha">
+        <label for="cep">CEP:</label>
+        <input type="text" name="cep" id="cep" pattern="\d{5}-\d{3}" value="{{ registroEntity.cep }}" size="10" maxlength="9" onblur="buscaCEP(this.value);" class="form-control mask-cep">
+      </div>
+      <div class="clearfix"></div>
+      <div class="alinha">
+        <label for="endereco">Endereço:</label>
+        <input type="text" name="endereco" id="endereco" value="{{ registroEntity.endereco }}" size="45" maxlength="70100" class="form-control">
+      </div>
+      <div class="alinha">
+        <label for="numero">Número</label>
+        <input type="text" name="numero" id="numero" value="{{ registroEntity.numero }}" size="7" maxlength="10" class="form-control">
+      </div>
+      <div class="alinha">
+        <label for="complemento">Complemento:</label>
+        <input type="text" name="complemento" id="complemento" value="{{ registroEntity.complemento }}" size="20" maxlength="20" class="form-control">
+      </div>
+      <div class="alinha">
+        <label for="bairro">Bairro:</label>
+        <input type="text" name="bairro" id="bairro" value="{{ registroEntity.bairro }}" size="30" maxlength="100" class="form-control">
+      </div>
+      <div class="clearfix"></div>
+      <div class="alinha">
+        <label for="uf">Estado:</label>
+        <select name="uf" id="uf" class="form-control">
+          <option value="">-- Selecione o estado --</option>
+          <option value="AC" {% if registroEntity.uf =='AC' %}selected="selected"{% endif %}>Acre</option>
+          <option value="AL" {% if registroEntity.uf =='AL' %}selected="selected"{% endif %}>Alagoas</option>
+          <option value="AP" {% if registroEntity.uf =='AP' %}selected="selected"{% endif %}>Amapá</option>
+          <option value="AM" {% if registroEntity.uf =='AM' %}selected="selected"{% endif %}>Amazonas</option>
+          <option value="BA" {% if registroEntity.uf =='BA' %}selected="selected"{% endif %}>Bahia</option>
+          <option value="CE" {% if registroEntity.uf =='CE' %}selected="selected"{% endif %}>Ceará</option>
+          <option value="DF" {% if registroEntity.uf =='DF' %}selected="selected"{% endif %}>Distrito Federal</option>
+          <option value="ES" {% if registroEntity.uf =='ES' %}selected="selected"{% endif %}>Espírito Santo</option>
+          <option value="GO" {% if registroEntity.uf =='GO' %}selected="selected"{% endif %}>Goiás</option>
+          <option value="MA" {% if registroEntity.uf =='MA' %}selected="selected"{% endif %}>Maranhão</option>
+          <option value="MT" {% if registroEntity.uf =='MT' %}selected="selected"{% endif %}>Mato Grosso</option>
+          <option value="MS" {% if registroEntity.uf =='MS' %}selected="selected"{% endif %}>Mato Grosso do Sul</option>
+          <option value="MG" {% if registroEntity.uf =='MG' %}selected="selected"{% endif %}>Minas Gerais</option>
+          <option value="PA" {% if registroEntity.uf =='PA' %}selected="selected"{% endif %}>Pará</option>
+          <option value="PB" {% if registroEntity.uf =='PB' %}selected="selected"{% endif %}>Paraíba</option>
+          <option value="PR" {% if registroEntity.uf =='PR' %}selected="selected"{% endif %}>Paraná</option>
+          <option value="PE" {% if registroEntity.uf =='PE' %}selected="selected"{% endif %}>Pernambuco</option>
+          <option value="PI" {% if registroEntity.uf =='PI' %}selected="selected"{% endif %}>Piauí</option>
+          <option value="RJ" {% if registroEntity.uf =='RJ' %}selected="selected"{% endif %}>Rio de Janeiro</option>
+          <option value="RN" {% if registroEntity.uf =='RN' %}selected="selected"{% endif %}>Rio Grande do Norte</option>
+          <option value="RS" {% if registroEntity.uf =='RS' %}selected="selected"{% endif %}>Rio Grande do Sul</option>
+          <option value="RR" {% if registroEntity.uf =='RR' %}selected="selected"{% endif %}>Rondônia</option>
+          <option value="RO" {% if registroEntity.uf =='RO' %}selected="selected"{% endif %}>Roraima</option>
+          <option value="SC" {% if registroEntity.uf =='SC' %}selected="selected"{% endif %}>Santa Catarina</option>
+          <option value="SE" {% if registroEntity.uf =='SE' %}selected="selected"{% endif %}>Sergipe</option>
+          <option value="SP" {% if registroEntity.uf =='SP' %}selected="selected"{% endif %}>São Paulo</option>
+          <option value="TO" {% if registroEntity.uf =='TO' %}selected="selected"{% endif %}>Tocantins</option>
+        </select>
+      </div>
+      <div class="alinha">
+        <label for="cidade">Cidade:</label>
+        <input type="text" name="cidade" id="cidade" value="{{ registroEntity.cidade }}" size="45" maxlength="100" class="form-control">
+      </div>
+      <div class="clearfix"></div>
+      <br>
+      <h4>Contato</h4>
+      <div class="alinha">
+        <label for="telefone1">Telefone 1:</label>
+        <input type="text" name="telefone1" id="telefone1" value="{{ registroEntity.telefone1 }}" size="16" maxlength="20" class="form-control">
+      </div>
+      <div class="alinha">
+        <label for="telefone2">Telefone 2:</label>
+        <input type="text" name="telefone2" id="telefone2" value="{{ registroEntity.telefone2 }}" size="16" maxlength="20" class="form-control"> 
+      </div>
+      <div class="clearfix"></div>
+      <br>
+      <h4>Outros</h4>
+      <div class="alinha" style="width:100%;">
+        <label for="observacoes">Observações:</label>
+        <textarea name="observacoes" id="observacoes" style="width:100%;height:150px;" class="form-control">{{ registroEntity.observacoes }}</textarea>
+ </div>
+      <div class="clearfix"></div>
+
+
+        <div class="alinha">
+          <label for="idDepartamento">Função: *</label>
+
+            <select name="idDepartamento" id="idDepartamento" class="form-control" required>
+              <option value="">-- Selecione a função --</option>
+              {%for dep in departamentos %}
+
+              <option value="{{ dep.idDepartamento }}"{% if dep.idDepartamento == registroEntity.idDepartamento %}selected="selected"{% endif %}>{{ dep.nomeDepartamento }}</option>
+     
+              {% endfor %}
+           </select>
+        </div>
+        <div class="alinha">
+        <label for="status">Situação: *</label>
+        <select name="status" id="status" class="form-control">
+          <option value="1" selected="selected">Ativo</option>
+          <option value="0">Inativo</option>
+        </select>
+      </div>
+      <div class="clearfix"></div>
+      <h4>Gennex</h4>
+      <div class="alinha">
+        <label for="idDiscador">ID Discador (Gennex)</label>
+        <input type="text" name="idDiscador" id="idDiscador" value="{{ registroEntity.idDiscador }}" size="20" maxlength="15" class="form-control">
+      </div>
+      <div class="clearfix"></div>
+      <h4>Informações de Usuário</h4>
+       <div class="alinha">
+          <label for="idEmpresa">Empresa: *</label>
+          <select name="idEmpresa" id="idEmpresa" class="form-control">
+            <option value="">-- Selecione a corretora --</option>
+            {%for emp in empresas %}
+              <option value="{{ emp.idEmpresa }}"{% if emp.idEmpresa == registroEntity.idEmpresa %}selected="selected"{% endif %}>{{ emp.nomeEmpresa }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      <div class="alinha">
+        <label for="idPerfil">Perfil</label>
+        <select name="idPerfil" id="idPerfil" class="form-control" required>
+          <option value=""> -- Selecione -- </option>
+          <option value="3" {% if registroEntity.idPerfil == '3' %}selected="selected"{% endif %}> Diretor </option>
+          <option value="2" {% if registroEntity.idPerfil == '2' %}selected="selected"{% endif %}> Supervisor </option>
+          <option value="1" {% if registroEntity.idPerfil == '1' %}selected="selected"{% endif %}> Usuário </option>
+        </select>
+      </div>
+      <div class="clearfix"></div>
+      <div class="alinha">
+        <label for="usuario" required>Usuário: *</label>
+        <input type="text" name="usuario" id="usuario" value="{{ registroEntity.usuario }}" size="20" maxlength="30" class="form-control" required>
+      </div>
+      <div class="alinha">
+        <label for="senha" required>Senha: *</label>
+          <input type="password" name="senha" id="senha" value="{% if registroEntity.senha != '' %}password{% endif %}" size="20" maxlength="15" class="form-control" required>
+      </div>
+
+
+      <div class="clearfix"></div> <br>
+      <div class="buttons">
+     <button type="button" class="btn btn-default" onclick="$(this).button('loading');window.history.go(-1)" data-loading-text="Aguarde...&nbsp;<i class='fa fa-spinner fa-spin'></i>" >
+        <span class="glyphicon glyphicon-remove"></span>
+        Cancelar
+      </button>
+      <button type="submit" class="btn btn-primary" data-loading-text="Aguarde...&nbsp;<i class='fa fa-spinner fa-spin'></i>"  id="btn_cadastro">
+        <span class="glyphicon glyphicon-ok"></span>
+
+        Salvar
+      </button>
+      </div>
+
+    </form>
+  </div>
+   
+{% endblock %}

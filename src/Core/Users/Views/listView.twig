@@ -1,0 +1,40 @@
+{% extends 'Core/layout.html.twig' %}
+{% set active = 'gerenciarUsuarios' %}
+
+{% block content %}
+
+
+<div class="row-fluid">
+  <div class="span12">
+    <h3 class="titulo"><span class="batch primary"></span>&nbsp;Listagem de Usuários</h3>
+    <div class="row-fluid">
+    <div class="alert alert-success" id="div_alert" style="display:none;">
+    </div>
+    </div>
+    <form role="form"  name="frm_filtro" id="frm_filtro">
+      <input type="hidden" value="" name="cod_usuario" id="cod_usuario">
+      <div class="alinha">
+        <label>Nome do Funcionário</label>
+        <input class="form-control" type="text" name="nome_funcionario" id="nome_funcionario" value="" size="30" style="width:300px;">
+      </div> 
+      <div class="alinha">
+        <label>Nome de Usuário</label>
+        <input type="text" class="form-control" name="nome_usuario" id="nome_usuario" value="" size="30">
+      </div> 
+      <div class="alinha">
+        <label for="status">Situação:</label>
+        <select name="status" id="status" class="form-control">
+          <option value="1" selected="selected">Ativo</option>
+          <option value="0">Inativo</option>
+        </select>
+      </div> 
+      <div class="alinha">
+        <label>&nbsp;</label>
+        <button type="button" class="btn btn-default form-control" onclick="alert('Vou FIltrar')"><i class=" icon-search"></i> Filtrar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+   
+{% endblock %}
